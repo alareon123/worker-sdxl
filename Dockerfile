@@ -9,9 +9,6 @@ RUN python3.11 -m pip install --upgrade pip && \
     python3.11 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
     rm /requirements.txt
 
-# Install additional dependencies for LoRA and safetensors
-RUN python3.11 -m pip install huggingface_hub
-
 # Cache Models
 COPY builder/cache_models.py /cache_models.py
 RUN python3.11 /cache_models.py && \
