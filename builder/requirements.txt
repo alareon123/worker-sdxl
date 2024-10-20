@@ -13,7 +13,6 @@ invisible-watermark==0.2.0
 xformers==0.0.23
 peft==0.13.2
 gdown
-huggingface_hub==0.17.3
 torch --index-url https://download.pytorch.org/whl/cu118
 
 aiohappyeyeballs==2.4.3

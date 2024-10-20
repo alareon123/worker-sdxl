@@ -6,7 +6,6 @@ import os
 import base64
 import concurrent.futures
 
-import huggingface_hub
 import torch
 from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL
 from diffusers.utils import load_image
@@ -37,7 +36,6 @@ class ModelHandler:
         self.load_models()
 
     def load_base(self):
-        var = huggingface_hub.errors
         vae = AutoencoderKL.from_pretrained(
             "madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16)
         base_pipe = StableDiffusionXLPipeline.from_pretrained(
