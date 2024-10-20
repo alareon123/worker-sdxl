@@ -11,5 +11,7 @@ PyWavelets>=1.1.1
 opencv-python>=4.8.1.78
 invisible-watermark==0.2.0
 xformers==0.0.23
+peft
 gdown
+huggingface_hub
 torch --index-url https://download.pytorch.org/whl/cu118
