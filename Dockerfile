@@ -9,10 +9,17 @@ RUN python3.11 -m pip install --upgrade pip && \
     python3.11 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
     rm /requirements.txt
 
+# Install additional dependencies for LoRA and safetensors
+RUN python3.11 -m pip install safetensors peft
+
 # Cache Models
 COPY builder/cache_models.py /cache_models.py
 RUN python3.11 /cache_models.py && \
     rm /cache_models.py
+
+# Optional: Download Civitai model (Replace with actual URL or path)
+# This section is optional if you're downloading the model directly in code
+# RUN wget -O /models/ponydiffusion6.safetensors "https://civitai.com/api/download/models/<model_id>"
 
 # Add src files (Worker Template)
 ADD src .
