@@ -14,5 +14,4 @@ xformers==0.0.23
 peft
 gdown
 huggingface_hub
-huggingface_hub.errors
 torch --index-url https://download.pytorch.org/whl/cu118
