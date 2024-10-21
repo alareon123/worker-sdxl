@@ -36,14 +36,10 @@ class ModelHandler:
         self.load_models()
 
     def load_base(self):
-        vae = AutoencoderKL.from_pretrained(
-            "LyliaEngine/sdxl_vae.safetensors", torch_dtype=torch.float16)
+        pipe = DiffusionPipeline.from_pretrained("Bakanayatsu/Pony-Diffusion-V6-XL-for-Anime")
+        pipe.load_lora_weights("LyliaEngine/Pony_Diffusion_V6_XL")
 
-        base_pipe = StableDiffusionXLPipeline.from_pretrained(
-            "LyliaEngine/Pony_Diffusion_V6_XL", vae=vae,
-            torch_dtype=torch.float16, variant="fp16", use_safetensors=True, add_watermarker=False
-        )
-        base_pipe = base_pipe.to("cuda", silence_dtype_warnings=True)
+        base_pipe = pipe.to("cuda", silence_dtype_warnings=True)
         base_pipe.enable_xformers_memory_efficient_attention()
         return base_pipe
 
