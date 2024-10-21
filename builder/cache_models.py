@@ -31,9 +31,9 @@ def get_diffusion_pipelines():
     }
 
     pipe = fetch_pretrained_model(StableDiffusionXLPipeline,
-                                  "stabilityai/stable-diffusion-xl-base-1.0", **common_args)
+                                  "LyliaEngine/Pony_Diffusion_V6_XL", **common_args)
     vae = fetch_pretrained_model(
-        AutoencoderKL, "madebyollin/sdxl-vae-fp16-fix", **{"torch_dtype": torch.float16}
+        AutoencoderKL, "LyliaEngine/sdxl_vae.safetensors", **{"torch_dtype": torch.float16}
     )
     print("Loaded VAE")
     refiner = fetch_pretrained_model(StableDiffusionXLImg2ImgPipeline,
