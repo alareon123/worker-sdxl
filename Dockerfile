@@ -9,12 +9,12 @@ RUN python3.11 -m pip install --upgrade pip && \
     python3.11 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
     rm /requirements.txt
 
+RUN wget -O /models/ponydiffusion6.safetensors "https://civitai.com/api/download/models/290640?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+
 # Cache Models
 COPY builder/cache_models.py /cache_models.py
 RUN python3.11 /cache_models.py && \
     rm /cache_models.py
-
-RUN wget -O /models/ponydiffusion6.safetensors "https://civitai.com/api/download/models/290640?type=Model&format=SafeTensor&size=pruned&fp=fp16"
 
 # Add src files (Worker Template)
 ADD src .

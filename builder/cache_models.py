@@ -1,7 +1,7 @@
 # builder/model_fetcher.py
 
 import torch
-from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL
+from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL, DiffusionPipeline
 from setuptools.extern import names
 
 
@@ -31,12 +31,11 @@ def get_diffusion_pipelines():
         "use_safetensors": True
     }
 
-    from diffusers import DiffusionPipeline
-
-    # Указываем путь к локальной модели
+    # Путь к локальному файлу с весами
     local_model_path = "/models/ponydiffusion6.safetensors"
 
-    pipe = DiffusionPipeline.from_pretrained(local_model_path, **common_args)
+    # Загрузка модели с использованием локального пути
+    pipe = DiffusionPipeline.from_single_file(local_model_path, **common_args)
 
     return pipe
 
