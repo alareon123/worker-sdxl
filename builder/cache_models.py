@@ -2,7 +2,6 @@
 
 import torch
 from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL, DiffusionPipeline
-from setuptools.extern import names
 
 
 def fetch_pretrained_model(model_class, model_name, **kwargs):
