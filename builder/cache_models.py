@@ -30,16 +30,12 @@ def get_diffusion_pipelines():
         "use_safetensors": True
     }
 
-    pipe = fetch_pretrained_model(StableDiffusionXLPipeline,
-                                  "LyliaEngine/Pony_Diffusion_V6_XL", **common_args)
-    vae = fetch_pretrained_model(
-        AutoencoderKL, "LyliaEngine/sdxl_vae.safetensors", **{"torch_dtype": torch.float16}
-    )
-    print("Loaded VAE")
-    refiner = fetch_pretrained_model(StableDiffusionXLImg2ImgPipeline,
-                                     "stabilityai/stable-diffusion-xl-refiner-1.0", **common_args)
+    from diffusers import DiffusionPipeline
 
-    return pipe, refiner, vae
+    pipe = DiffusionPipeline.from_pretrained("Bakanayatsu/Pony-Diffusion-V6-XL-for-Anime")
+    pipe.load_lora_weights("LyliaEngine/Pony_Diffusion_V6_XL")
+
+    return pipe
 
 
 if __name__ == "__main__":
