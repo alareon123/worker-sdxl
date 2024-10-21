@@ -2,6 +2,7 @@
 
 import torch
 from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL
+from setuptools.extern import names
 
 
 def fetch_pretrained_model(model_class, model_name, **kwargs):
@@ -32,8 +33,10 @@ def get_diffusion_pipelines():
 
     from diffusers import DiffusionPipeline
 
-    pipe = DiffusionPipeline.from_pretrained("Bakanayatsu/Pony-Diffusion-V6-XL-for-Anime")
-    pipe.load_lora_weights("LyliaEngine/Pony_Diffusion_V6_XL")
+    # Указываем путь к локальной модели
+    local_model_path = "/models/ponydiffusion6.safetensors"
+
+    pipe = DiffusionPipeline.from_pretrained(local_model_path, **common_args)
 
     return pipe
 

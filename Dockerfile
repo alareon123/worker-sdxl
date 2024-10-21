@@ -14,9 +14,7 @@ COPY builder/cache_models.py /cache_models.py
 RUN python3.11 /cache_models.py && \
     rm /cache_models.py
 
-# Optional: Download Civitai model (Replace with actual URL or path)
-# This section is optional if you're downloading the model directly in code
-# RUN wget -O /models/ponydiffusion6.safetensors "https://civitai.com/api/download/models/<model_id>"
+RUN wget -O /models/ponydiffusion6.safetensors "https://civitai.com/api/download/models/290640?type=Model&format=SafeTensor&size=pruned&fp=fp16"
 
 # Add src files (Worker Template)
 ADD src .
