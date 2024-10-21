@@ -1,27 +1,7 @@
 # builder/model_fetcher.py
-import gdown
+
 import torch
 from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL
-from peft import PeftModel
-import os
-
-lora_folder = "./loras"
-os.makedirs(lora_folder, exist_ok=True)
-
-# Функция для скачивания файла с Google Диска
-def download_from_google_drive(file_id, output_path):
-    google_drive_url = f'https://drive.google.com/uc?id={file_id}'
-    gdown.download(google_drive_url, output_path, quiet=False)
-
-# Скачивание модели и LoRA с Google Диска
-def download_model_and_lora():
-    # Загрузка LoRA весов
-    lora_file_id = '1GBKiXaKlt2n4IEmFp0NVf_4pzIf5gA8e'  # ID файла LoRA на Google Drive
-    lora_output_path = os.path.join(lora_folder, 'fcomic.safetensors')
-    if not os.path.exists(lora_output_path):
-        download_from_google_drive(lora_file_id, lora_output_path)
-
-    return lora_output_path
 
 
 def fetch_pretrained_model(model_class, model_name, **kwargs):
@@ -44,7 +24,6 @@ def get_diffusion_pipelines():
     '''
     Fetches the Stable Diffusion XL pipelines from the HuggingFace model hub.
     '''
-
     common_args = {
         "torch_dtype": torch.float16,
         "variant": "fp16",
@@ -52,19 +31,13 @@ def get_diffusion_pipelines():
     }
 
     pipe = fetch_pretrained_model(StableDiffusionXLPipeline,
-                                  "LyliaEngine/Pony_Diffusion_V6_XL", **common_args)
-    # Применяем LoRA веса, загруженные с Civitai
-    lora_weights_path = download_model_and_lora()
-
+                                  "stabilityai/stable-diffusion-xl-base-1.0", **common_args)
     vae = fetch_pretrained_model(
-        AutoencoderKL, "LyliaEngine/Pony_Diffusion_V6_XL", **{"torch_dtype": torch.float16}
+        AutoencoderKL, "madebyollin/sdxl-vae-fp16-fix", **{"torch_dtype": torch.float16}
     )
     print("Loaded VAE")
     refiner = fetch_pretrained_model(StableDiffusionXLImg2ImgPipeline,
                                      "stabilityai/stable-diffusion-xl-refiner-1.0", **common_args)
-
-    # Применение LoRA
-    pipe = PeftModel.from_pretrained(pipe, lora_weights_path)
 
     return pipe, refiner, vae
 

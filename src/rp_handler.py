@@ -7,7 +7,7 @@ import base64
 import concurrent.futures
 
 import torch
-from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL
+from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline, AutoencoderKL, DiffusionPipeline
 from diffusers.utils import load_image
 
 from diffusers import (
@@ -37,9 +37,10 @@ class ModelHandler:
 
     def load_base(self):
         vae = AutoencoderKL.from_pretrained(
-            "madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16)
+            "LyliaEngine/sdxl_vae.safetensors", torch_dtype=torch.float16)
+
         base_pipe = StableDiffusionXLPipeline.from_pretrained(
-            "stabilityai/stable-diffusion-xl-base-1.0", vae=vae,
+            "LyliaEngine/Pony_Diffusion_V6_XL", vae=vae,
             torch_dtype=torch.float16, variant="fp16", use_safetensors=True, add_watermarker=False
         )
         base_pipe = base_pipe.to("cuda", silence_dtype_warnings=True)
@@ -107,7 +108,6 @@ def generate_image(job):
     Generate an image from text using your Model
     '''
     job_input = job["input"]
-
     # Input validation
     validated_input = validate(job_input, INPUT_SCHEMA)
 
