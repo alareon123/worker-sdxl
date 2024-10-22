@@ -30,11 +30,8 @@ def get_diffusion_pipelines():
         "use_safetensors": True
     }
 
-    # Путь к локальному файлу с весами
-    local_model_path = "/models/ponydiffusion6.safetensors"
-
     # Загрузка модели с использованием локального пути
-    pipe = DiffusionPipeline.from_pretrained(local_model_path, **common_args)
+    pipe = StableDiffusionXLPipeline.from_pretrained("Bakanayatsu/Pony-Diffusion-V6-XL-for-Anime")
 
     return pipe
 
