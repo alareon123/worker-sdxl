@@ -34,7 +34,7 @@ def get_diffusion_pipelines():
     local_model_path = "/models/ponydiffusion6.safetensors"
 
     # Загрузка модели с использованием локального пути
-    pipe = DiffusionPipeline.from_single_file(local_model_path, **common_args)
+    pipe = DiffusionPipeline.from_pretrained(local_model_path, **common_args)
 
     return pipe
 
